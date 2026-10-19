@@ -1,4 +1,5 @@
 from typing import List
+from math import comb
 
 class Solution:
     def numOfWays(self, nums: List[int]) -> int:
@@ -8,12 +9,13 @@ class Solution:
             if len(arr) <= 2:
                 return 1
 
-            left = [x for x in arr[1:] if x < arr[0]]
-            right = [x for x in arr[1:] if x > arr[0]]
+            root = arr[0]
 
-            from math import comb
+            left = [x for x in arr[1:] if x < root]
+            right = [x for x in arr[1:] if x > root]
+
             ways = comb(len(arr) - 1, len(left))
 
-            return (ways * solve(left) * solve(right)) % MOD
+            return ways * solve(left) * solve(right) % MOD
 
         return (solve(nums) - 1) % MOD
